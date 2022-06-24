@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body onkeydown="keydownHandler()">
+
+
+    <div>
+        <button onclick="start()">start</button>
+        <button onclick="stop()">stop</button>
+        <canvas width="800" height="700" id="canvas" style="border: 1px solid #da6200; border-radius: 7px;"></canvas>
+    </div>
+
+</body>
+<script >
+
+  let canvas = document.getElementById("canvas")
+  let ctx = canvas.getContext("2d")
+
+  
+  
+  class Circle {
+    x
+    y
+    radius
+    color
+    constructor(x, y, radius, color) {
+      this.x = x
+      this.y = y
+      this.radius = radius
+      this.color = color
+    }
+    
+    // setX(x){
+    //     this.x = x
+    // }
+    // setY(y){
+    //       this.y = y
+    // }
+    
+    
+    drawCircle() {
+      ctx.beginPath()
+      ctx.fillStyle = this.color
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2)
+      ctx.fill()
+      ctx.closePath()
+    }
+  }
+
+  
+
+  class Paddle{
+    x
+    width
+    height
+    color
+    constructor(x,y,width,height,color) {
+      this.x = x
+      this.y = y
+      this.width = width
+      this.height = height
+      this.color =color
+    }
+
+
+    drawPaddle(){
+      ctx.beginPath()
+      ctx.fillStyle= this.color
+      ctx.fillRect(this.x,this.y,this.width,this.height)
+      ctx.stroke()
+      ctx.closePath()
+    }
+
+  }
+  
+  
+  let circle1 = new Circle(canvas.offsetWidth/3, 400, 15,"#2280ff")
+  let paddle1 = new Paddle(canvas.offsetWidth/4,canvas.offsetHeight-8,canvas.offsetWidth/2,10,"black")
+  
+  
+  // function moveRight(){
+  //     if (paddle1.x<canvas.offsetWidth-paddle1.width){
+  //         paddle1.x+=40
+  //     }
+  // }
+  //
+  // function moveLeft(){
+  //     if (paddle1.x>0){
+  //         paddle1.x-=40
+  //     }
+  // }
+  
+  
+  let score = 0
+  function drawScore(){
+      ctx.font = "20px Arial"
+      ctx.fillStyle = "blue"
+      ctx.fillText("Score: "+score, 5, 20)
+  }
+  
+  
+  function keydownHandler(){
+    if(event.key === "ArrowRight" && paddle1.x<canvas.offsetWidth - paddle1.width){
+        paddle1.x+=60
+    }
+    if (event.key === "ArrowLeft" && paddle1.x > 0){
+        paddle1.x-=60
+    }
+  }
+  
+  
+  
+  let dx=1.5
+  let dy=1
+  function speed(){
+      circle1.x += dx
+      circle1.y += -dy
+  }
+  
+  
+  
+  
+  function draw() {
+      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
+      circle1.drawCircle()
+      paddle1.drawPaddle()
+      drawScore()
+      speed()
+      
+      if (circle1.x - circle1.radius <=0 || circle1.radius + circle1.x >= canvas.offsetWidth){
+          dx = -dx
+      }
+      else if (circle1.y - circle1.radius <= 0){
+          dy = -dy
+      }
+      else if(circle1.y + circle1.radius >= canvas.offsetHeight){
+          if (score === 1){
+              dx = 1.5
+              dy = -1
+              circle1.color = circle1.color = "#ffbf90"
+          }
+          else if (score == 3){
+              paddle1.width -= 300
+              
+          }
+          else if (score === 5){
+              dx = 2.5
+              dy = -1.5
+              circle1.color = circle1.color = "#ff7a24"
+          }
+          else if (score === 7){
+              paddle1.width -= 100
+          }
+          else if (score === 10){
+              dx = 4
+              dy = -2.5
+              circle1.color = circle1.color = "#ff3030"
+          }
+          
+          if(circle1.x  > paddle1.x && circle1.x < paddle1.x + paddle1.width/2){
+              dy = -dy-0.1
+              score ++
+              
+          }else if(circle1.x  > paddle1.x+ paddle1.width/2 && circle1.x < paddle1.x + paddle1.width){
+              dy = -dy+0.1
+              score ++
+          }
+          else {
+              alert("Thua r :v")
+              stop()
+              document.location.reload();
+          }
+      }
+      
+  }
+  draw()
+  
+  
+  
+  
+  let interval
+  function start() {
+      draw()
+      interval = setInterval(draw, 0)
+  }
+
+  
+  function stop() {
+      clearInterval(interval)
+      
+  }
+
+  
+</script>
+</html>

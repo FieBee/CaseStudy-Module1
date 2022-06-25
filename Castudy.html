@@ -10,6 +10,7 @@
         <img src="https://scr.vn/wp-content/uploads/2020/07/%E1%BA%A3nh-n%E1%BB%81n-t%E1%BB%91i-gi%E1%BA%A3n-ch%C3%BA-m%C3%A8o-%C4%91en-2048x1280.png" alt="Khong hien thi">
         <button id="start" onclick="start()">Start</button>
         <button id="stop" onclick="stop()">Stop</button>
+        <button id="reset" onclick="reset()">Reset</button>
         <canvas  width="800" height="700" id="canvas"  ></canvas>
     </div>
 
@@ -78,7 +79,7 @@
     
     
     let circle1 = new Circle(canvas.offsetWidth/3, 400, 15,"#2280ff")
-    let paddle1 = new Paddle(canvas.offsetWidth/4,canvas.offsetHeight-8,canvas.offsetWidth/2,10,"black")
+    let paddle1 = new Paddle(canvas.offsetWidth/4,canvas.offsetHeight-8,canvas.offsetWidth,10,"black")
     
     
     // function moveRight(){
@@ -122,7 +123,6 @@
     
     
     
-    
     function draw() {
         ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
         circle1.drawCircle()
@@ -135,18 +135,17 @@
         }
         else if (circle1.y - circle1.radius <= 0){
             dy = -dy
-        }
-        else if(circle1.y + circle1.radius >= canvas.offsetHeight){
+            score ++
             if (score === 1){
-                dx = 1.5
+                dx = -1.5
                 dy = -1
                 circle1.color = circle1.color = "#ffbf90"
             }
             else if (score === 3){
-                paddle1.width -= 300
+                paddle1.width -= 100
             }
             else if (score === 5){
-                dx = 2.5
+                dx = -2.5
                 dy = -1.5
                 circle1.color = circle1.color = "#ff7a24"
             }
@@ -154,14 +153,16 @@
                 paddle1.width -= 100
             }
             else if (score === 10){
-                dx = 4
+                dx = -4
                 dy = -2.5
                 circle1.color = circle1.color = "#ff3030"
             }
+        }
+        else if(circle1.y + circle1.radius >= canvas.offsetHeight){
+            
             
             if(circle1.x  > paddle1.x && circle1.x < paddle1.x + paddle1.width){
                 dy = -dy
-                score ++
                 
             }
             else {
@@ -176,7 +177,6 @@
     
     
     
-    
     let interval
     function start() {
         draw()
@@ -187,6 +187,10 @@
     function stop() {
         clearInterval(interval)
         
+    }
+    
+    function reset(){
+        document.location.reload()
     }
 
 

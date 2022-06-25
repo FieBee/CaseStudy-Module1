@@ -34,4 +34,10 @@ button{
     left: 150px;
     width: 100px ;
 }
+#reset{
+    position: absolute;
+    top: 400px;
+    left: 150px;
+    width: 100px ;
+}
 

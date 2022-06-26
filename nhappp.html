@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale= 1">
+    <meta charset="utf-8" />
+    <title>Bouncing Ball Game</title>
+    <link rel="stylesheet" href="GameBb.css">
+</head>
+
+<body onkeydown="keydownHandler()">
+
+<div>
+    <canvas id="myCanvas" width="700px" height="500px">
+    </canvas>
+    <button onclick="moveleft()"> < </button>
+    <button onclick="moveright()"> > </button>
+</div>
+</div>
+<script>
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    
+    // Ball (x,y)
+    var x = canvas.width / 3;
+    var y = canvas.height - 300;
+    var ball = "orange";
+    var ballRadius = 12;
+    
+    
+    
+    var score = 0;
+    
+    function drawBall() {
+        // drawPaddle();
+        // ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        // ctx.fillStyle = ball;
+        // ctx.fill();
+        ctx.stroke();
+        // ctx.closePath();
+    }
+    // paddle
+    var paddleHeight = 5;
+    var paddleWidth = 250;
+    var paddleX = 0;
+    
+    function drawPaddle() {
+        // ctx.beginPath();
+        // ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+        // ctx.fillStyle = "black";
+        // ctx.fill();
+        // ctx.closePath();
+    }
+    
+    
+    function moveleft() {
+        
+        if (paddleX > 0) {
+            paddleX -= 40;
+        }
+    }
+    
+    function moveright() {
+        if (paddleX < canvas.width - paddleWidth) {
+            paddleX += 40;
+        }
+    }
+    
+    function keydownHandler() {
+        if (event.key === "ArrowRight" && paddleX < canvas.width - paddleWidth) {
+            paddleX += 40;
+        }
+        if (event.key === "ArrowLeft" && paddleX > 0) {
+            paddleX -= 40;
+        }
+        
+    }
+    
+    // function drawScore() {
+    //     ctx.font = "20px Arial";
+    //     ctx.fillStyle = "red";
+    //     ctx.fillText("Score: " + score, 5, 20);
+    // }
+    
+    // Hướng di chuyển
+    var dx = 1;
+    var dy = -0.8;
+    
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBall();
+        drawScore();
+        
+        x += dx;
+        y += dy;
+        
+        
+        //Chạm tường
+        // if (x + ballRadius + dx > canvas.width || x + dx < ballRadius) {
+        //     dx = -dx;
+        // }
+        // if (y + dy < ballRadius) {
+        //     dy = -dy;
+        // } else if (y + dy + ballRadius > canvas.height) {
+        //     if (score == 2) {
+        //         dx = 1.5;
+        //         dy = 1.3,
+        //                ball = "orange"
+        //
+        //     }
+        //     if (score == 4) {
+        //         paddleWidth = 210
+        //     }
+        //     if (score == 6) {
+        //         dx = 2;
+        //         dy = 1.8,
+        //                ball = "red"
+        //     }
+        //     if (score == 8) {
+        //         paddleWidth = 170
+        //     }
+        //
+        //
+        //     if (x > paddleX && x < paddleX + paddleWidth) {
+        //         dy = -dy;
+        //         score += 1;
+        //
+        //     } else {
+        //         alert("Trò chơi kết thúc!! Điểm của bạn là: " + score);
+        //
+        //         document.location.reload();
+        //
+        //         clearInterval(interval);
+        //     }
+        // }
+    }
+    
+    var interval = setInterval(draw, 0);
+</script>
+
+</body>
+
+</html>

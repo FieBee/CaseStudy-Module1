@@ -9,6 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    
+
+
 </head>
 <body onkeydown="keydownHandler()">
     <div>
@@ -39,111 +42,25 @@
             <button style="font-size: 100px" class="button-hover2"  onclick="moveLeft()"><p> < </p></button>
             <button style="font-size: 100px" class="button-hover2" id="moveRight"  onclick="moveRight()"> <p> > </p> </button>
         </div>
+        <div>
+        
+        </div>
     </div>
 
 </body>
+
+<script src="Js/Score.js"></script>
+<script src="Js/Control.js"></script>
+<script src="Js/Class-object.js"></script>
+<script src="Js/Impact.js"></script>
+
 <script >
     
     let canvas = document.getElementById("canvas")
     let ctx = canvas.getContext("2d")
     
-    
-    
-    class Circle {
-        x
-        y
-        radius
-        color
-        border
-        constructor(x, y, radius, color,border) {
-            this.x = x
-            this.y = y
-            this.radius = radius
-            this.color = color
-            this.border = border
-        }
-        
-        // setX(x){
-        //     this.x = x
-        // }
-        // setY(y){
-        //       this.y = y
-        // }
-        
-        
-        drawCircle() {
-            ctx.beginPath()
-            ctx.fillStyle = this.color
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2)
-            ctx.fill()
-            ctx.stroke()
-            ctx.closePath()
-        }
-    }
-    
-    
-    
-    class Paddle{
-        x
-        y
-        width
-        height
-        color
-        constructor(x,y,width,height,color) {
-            this.x = x
-            this.y = y
-            this.width = width
-            this.height = height
-            this.color =color
-        }
-        
-        
-        drawPaddle(){
-            ctx.beginPath()
-            ctx.fillStyle= this.color
-            ctx.fillRect(this.x,this.y,this.width,this.height)
-            ctx.stroke()
-            ctx.closePath()
-        }
-        
-    }
-    
-    
     let circle1 = new Circle(canvas.offsetWidth/3, 400, 15,"#35dc43","1px solid black")
-    let paddle1 = new Paddle(canvas.offsetWidth/4,canvas.offsetHeight-10,canvas.offsetWidth/3,10,"black")
-    
-    
-    function moveRight(){
-        if (paddle1.x<canvas.offsetWidth-paddle1.width){
-            paddle1.x+=60
-        }
-    }
-
-    function moveLeft(){
-        if (paddle1.x>0){
-            paddle1.x-=60
-        }
-    }
-    
-    
-    
-    function drawScore(){
-        ctx.font = "20px Arial"
-        ctx.fillStyle = "blue"
-        ctx.fillText("Score: "+score, 5, 20)
-    }
-    
-    
-    function keydownHandler(){
-        if(event.key === "ArrowRight" && paddle1.x<canvas.offsetWidth - paddle1.width){
-            paddle1.x+=60
-        }
-        if (event.key === "ArrowLeft" && paddle1.x > 0){
-            paddle1.x-=60
-        }
-    }
-    
-    
+    let paddle1 = new Paddle(canvas.offsetWidth/4,canvas.offsetHeight-10,canvas.offsetWidth/2,10,"black")
     
     let dx=1.5
     let dy=1
@@ -151,9 +68,6 @@
         circle1.x += dx
         circle1.y += -dy
     }
-
-    let score = 0
-    
     
     function draw() {
         ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
@@ -161,111 +75,9 @@
         paddle1.drawPaddle()
         drawScore()
         speed()
-        
-        
-    
-        // circle1.x += dx
-        // circle1.y += -dy
-        
-        if (circle1.x - circle1.radius <=0 || circle1.radius + circle1.x >= canvas.offsetWidth){
-            dx = -dx
-        }
-        else if (circle1.y - circle1.radius <= 0){
-            dy = -dy
-            score ++
-            if (score === 1){
-                dx = -1.5
-                dy = -1
-                circle1.color = circle1.color = "#ffdf31"
-            }
-            else if (score === 3){
-                paddle1.width -= 100
-            }
-            else if (score === 5){
-                dx = -2.5
-                dy = -1.5
-                circle1.color = circle1.color = "#ff7a24"
-            }
-            else if (score === 7){
-                paddle1.width -= 100
-            }
-            else if (score === 10){
-                dx = -4
-                dy = -2.5
-                circle1.color = circle1.color = "#ff3030"
-            }
-        }
-        else if(circle1.y + circle1.radius >= canvas.offsetHeight){
-            if(circle1.x  > paddle1.x && circle1.x < paddle1.x + paddle1.width){
-                dy = -dy
-            }
-            else {
-                alert("Your score: "+score)
-                stop()
-                arr.push(score)
-                arr.sort((a,b)=>b-a)
-                let str2 =""
-                for (let i=0;i<arr.length;i++){
-                    str2 += "top "+ (i+1)+": "+ arr[i]+" score" +"<br>"
-                }
-                console.log(arr)
-                
-                document.getElementById("showScore").innerHTML = str2
-                str1 =""
-                
-                
-                // let swapScore
-    
-                
-                
-                
-            }
-        }
-        
-       
+        Impact()
     }
     draw()
-    
-    let interval
-    function start() {
-        interval = setInterval(draw, 0)
-        // if (dx===0){
-        // }
-        // speed()
-        
-    }
-    
-    
-    
-    function stop() {
-        clearInterval(interval)
-        
-    }
-    
-    function reset(){
-        document.location.reload()
-        
-    }
-    
-    
-    let arr = [20,3,1]
-    let str1 =""
-    for (let i=0;i<arr.length;i++){
-        str1 += "top "+ (i+1)+": "+ arr[i]+" score" +"<br>"
-    }
-    console.log(arr)
-    document.getElementById("showScore").innerHTML = str1
-    
-    
-    // arr.sort()
-    // arr.reverse()
-
-    
-    
-    
-    
-    
-    
     
 </script>
 

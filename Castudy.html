@@ -6,22 +6,37 @@
     <link rel="stylesheet" href="Castudy.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=baloo+2&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=bangers&display=swap" rel="stylesheet">
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">-->
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />-->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons"
+          rel="stylesheet">
     
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Outlined"
+          rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round"
+          rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Sharp"
+          rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Two+Tone"
+          rel="stylesheet">
 
 
 </head>
-<body onkeydown="keydownHandler()">
+<body onmouseover="" onkeydown="keydownHandler()">
     <div>
-        <img src="Img/Backgroud.jpg" alt="Khong hien thi">
+        <img src="Img/backgroud.jpg" alt="Khong hien thi">
         <div>
-            <h1>Bouncing Ball</h1>
+            <h1>bouncing ball</h1>
     
         </div>
         <div>
-            <button class="button-hover" id="start" onclick="start()">
+            <button  class="button-hover" id="start" onclick="start()">
                 <p style="font-size: 30px">Start</p>
             </button>
             <button class="button-hover" id="stop" onclick="stop()">
@@ -46,12 +61,43 @@
         
         </div>
     </div>
+    <div class="linkInfor">
+        <h3>Liên hệ với chúng tôi:</h3>
+        <br>
+        <a href="https://www.facebook.com/phuonga13">
+            <span style="float: left" class="material-icons">
+                account_circle
+            </span>
+            <p style="float: left">
+                  Facebook
+            </p>
+            
+
+        </a>
+        <a href="https://www.youtube.com/channel/UCx66_e-Z0SYL316rDhzmY0w/featured">
+            <span style="float: left" class="material-icons">
+                smart_display
+            </span>
+            <p style="float: left">Youtobe</p>
+        </a>
+        <a href="https://www.facebook.com/messages/t/488035214559138">
+            <span style="float: left" class="material-icons">
+                headset_mic
+            </span>
+            <p style="float: left">Trung tâm hỗ trợ</p>
+        </a>
+        <br>
+        <img style="width: 150px;margin-top: 20px" src="Img/12+.png" alt="">
+
+    </div>
+
+
 
 </body>
 
 <script src="Js/Score.js"></script>
 <script src="Js/Control.js"></script>
-<script src="Js/Class-object.js"></script>
+<script src="Js/Class.js"></script>
 <script src="Js/Impact.js"></script>
 
 <script >
@@ -59,19 +105,20 @@
     let canvas = document.getElementById("canvas")
     let ctx = canvas.getContext("2d")
     
-    let circle1 = new Circle(canvas.offsetWidth/3, 400, 15,"#35dc43","1px solid black")
+    let ball1 = new Ball(canvas.offsetWidth/3, 400, 15,"#35dc43","1px solid black")
     let paddle1 = new Paddle(canvas.offsetWidth/4,canvas.offsetHeight-10,canvas.offsetWidth/2,10,"black")
     
     let dx=1.5
     let dy=1
+    
     function speed(){
-        circle1.x += dx
-        circle1.y += -dy
+        ball1.x += dx
+        ball1.y += -dy
     }
     
     function draw() {
         ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight);
-        circle1.drawCircle()
+        ball1.drawBall()
         paddle1.drawPaddle()
         drawScore()
         speed()
@@ -79,6 +126,7 @@
     }
     draw()
     
+    let stopRepeating = false
 </script>
 
 </html>

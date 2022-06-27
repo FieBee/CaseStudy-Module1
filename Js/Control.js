@@ -2,9 +2,13 @@
 let interval
 function start() {
     interval = setInterval(draw, 0)
+    document.getElementById("start").style.display = "none"
+
+
 }
 function stop() {
     clearInterval(interval)
+    document.getElementById("start").style.display = ""
 }
 function reset(){
     document.location.reload()
@@ -22,7 +26,6 @@ function moveLeft(){
         paddle1.x-=60
     }
 }
-
 
 function keydownHandler(){
     if(event.key === "ArrowRight" && paddle1.x<canvas.offsetWidth - paddle1.width){
